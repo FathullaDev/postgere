@@ -2,6 +2,8 @@ import os
 import re
 import sys
 
+from pgadmin import *
+
 data_contact=[]
 class Contact:
     def __init__(self,name,phone,email):
@@ -35,52 +37,47 @@ def add_contact():
             print("Noto'gri kiritildi. Qaytadan urining!")
         else: break
 
-    contact=Contact(name,phone,email)
-    data_contact.append(contact)
+    add_contactSQL(name,phone,email)
+    # contact=Contact(name,phone,email)
+    # data_contact.append(contact)
     print("Ma'lumot muvaffaqiyatli qo'shildi!")
 
 def delete_contact():
-    delete_name=input("Nameni kiriting: ")
-    for contact in data_contact:
-        if contact.name == delete_name:
-            data_contact.remove(contact)
-            print("Ma'lumot o'chirildi!")
-        else:
-            print(f"{delete_name} topilmadi.")
+    delete_id=input("ID ni kiriting: ")
+    delete_contactSQL(delete_id)
 
 def change_contact():
-    change_name=input("Nameni kiriting: ")
-    for contact in data_contact:
-        if contact.name == change_name:
-            change_key = int(input("Nameni o'zgartirasizmi?\n1 - Ha\n2 - Yo'q\nKiriting:"))
-            if change_key == 1:
-                while True:
-                    new_name = input("Name: ")
-                    if not check_name(new_name):
-                        print("Noto'gri kiritildi. Qaytadan urining!")
-                    else:
-                        break
-                contact.name = new_name
+    new_name=None
+    new_phone=None
+    new_email=None
+    change_id=input("ID ni kiriting: ")
+    change_key = int(input("Nameni o'zgartirasizmi?\n1 - Ha\n2 - Yo'q\nKiriting:"))
+    if change_key == 1:
+        while True:
+            new_name = input("Name: ")
+            if not check_name(new_name):
+                print("Noto'gri kiritildi. Qaytadan urining!")
+            else:
+                break
 
-            change_key = int(input("Phoneni o'zgartirasizmi?\n1 - Ha\n2 - Yo'q\nKiriting:"))
-            if change_key == 1:
-                while True:
-                    new_phone = input("Phone: ")
-                    if not check_phone(new_phone):
-                        print("Noto'gri kiritildi. Qaytadan urining!")
-                    else:
-                        break
-                contact.phone = new_phone
+    change_key = int(input("Phoneni o'zgartirasizmi?\n1 - Ha\n2 - Yo'q\nKiriting:"))
+    if change_key == 1:
+        while True:
+            new_phone = input("Phone: ")
+            if not check_phone(new_phone):
+                print("Noto'gri kiritildi. Qaytadan urining!")
+            else:
+                break
 
-            change_key = int(input("Emailni o'zgartirasizmi?\n1 - Ha\n2 - Yo'q\nKiriting:"))
-            if change_key == 1:
-                while True:
-                    new_email = input("Email: ")
-                    if not check_email(new_email):
-                        print("Noto'gri kiritildi. Qaytadan urining!")
-                    else:
-                        break
-                contact.email = new_email
+    change_key = int(input("Emailni o'zgartirasizmi?\n1 - Ha\n2 - Yo'q\nKiriting:"))
+    if change_key == 1:
+        while True:
+            new_email = input("Email: ")
+            if not check_email(new_email):
+                print("Noto'gri kiritildi. Qaytadan urining!")
+            else:
+                break
+    change_contactSQL(change_id,new_name,new_phone,new_email)
 
 def check_name(name):
     r_name = r"^[A-Z][a-z]{2,15}$"

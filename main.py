@@ -1,6 +1,5 @@
 from sms import *
 from contact import *
-from database import get
 
 while True:
     print("1 - SMS\n2 - Kontakt\n3 - Chiqish")
